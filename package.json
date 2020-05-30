@@ -3,46 +3,35 @@
   "version": "2.5.0",
   "description": "A NodeJS implementation of Dijkstra's algorithm",
   "author": "Alberto Restifo <alberto.restifo@gmail.com>",
-  "main": "libs/Graph.js",
+  "main": "./index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/albertorestifo/node-dijkstra"
+    "url": "https://github.com/smart-parks/node-dijkstra"
   },
   "scripts": {
-    "test": "eslint . && istanbul cover _mocha -- --ui bdd -R spec -t 5000",
-    "compile": "gulp build"
+    "build": "rollup -c rollup.config.js; du index.js; gzip -c index.js | wc -c",
+    "format": "prettier --write {libs,test}/*.mjs",
+    "test": "yarn jest --coverage"
   },
   "bugs": {
-    "url": "https://github.com/albertorestifo/node-dijkstra/issues"
+    "url": "https://github.com/smart-parks/node-dijkstra/issues"
   },
-  "keywords": [
-    "dijkstra",
-    "shortest path"
-  ],
+  "keywords": ["dijkstra", "shortest path"],
   "license": "MIT",
   "devDependencies": {
-    "babel-eslint": "^6.1.2",
-    "browserify": "^13.1.0",
-    "codecov.io": "^0.1.6",
-    "eslint": "^3.3.0",
-    "eslint-config-airbnb": "^10.0.1",
-    "eslint-plugin-import": "^1.13.0",
-    "eslint-plugin-jsx-a11y": "^2.1.0",
-    "eslint-plugin-react": "^6.1.0",
-    "gulp": "^3.9.1",
-    "gulp-babel": "^6.1.2",
-    "gulp-rename": "^1.2.2",
-    "gulp-uglify": "^2.0.0",
-    "istanbul": "^0.4.4",
-    "mocha": "^3.0.2",
+    "@ampproject/rollup-plugin-closure-compiler": "^0.25.2",
+    "jest": "^26.0.1",
     "must": "^0.13.2",
-    "sinon": "^1.17.5",
-    "vinyl-source-stream": "^1.1.0"
+    "prettier": "^2.0.5",
+    "rollup": "^2.11.2",
+    "rollup-jest": "^0.0.2",
+    "rollup-plugin-terser": "^6.1.0",
+    "sinon": "^1.17.5"
   },
-  "dependencies": {},
-  "browserify": {
-    "transform": [
-      "babelify"
-    ]
+  "jest": {
+    "testMatch": ["**/test/*.test.js"],
+    "transform": {
+      "^.+\\.js$": "rollup-jest"
+    }
   }
 }

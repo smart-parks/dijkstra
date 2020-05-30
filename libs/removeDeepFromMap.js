@@ -7,7 +7,7 @@
  * @param {string}  key - Key to remove from the map
  * @return {Map}    New map without the passed key
  */
-function removeDeepFromMap(map, key) {
+export function removeDeepFromMap(map, key) {
   const newMap = new Map();
 
   for (const [aKey, val] of map) {
@@ -20,5 +20,3 @@ function removeDeepFromMap(map, key) {
 
   return newMap;
 }
-
-module.exports = removeDeepFromMap;

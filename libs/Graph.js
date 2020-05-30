@@ -1,11 +1,10 @@
-const Queue = require('./PriorityQueue');
-const removeDeepFromMap = require('./removeDeepFromMap');
-const toDeepMap = require('./toDeepMap');
-const validateDeep = require('./validateDeep');
+import { PriorityQueue } from "./PriorityQueue";
+import { removeDeepFromMap } from "./removeDeepFromMap";
+import { toDeepMap } from "./toDeepMap";
+import { validateDeep } from "./validateDeep";
 
 /** Creates and manages a graph */
 class Graph {
-
   /**
    * Creates a new Graph, optionally initializing it a nodes graph representation.
    *
@@ -22,7 +21,7 @@ class Graph {
    * In alternative to an object, you can pass a `Map` of `Map`. This will
    * allow you to specify numbers as keys.
    *
-   * @param {Objec|Map} [graph] - Initial graph definition
+   * @param {Object|Map} [graph] - Initial graph definition
    * @example
    *
    * const route = new Graph();
@@ -63,7 +62,7 @@ class Graph {
   /**
    * Adds a node to the graph
    *
-   * @param {string} name      - Name of the node
+   * @param {string} name - Name of the node
    * @param {Object|Map} neighbors - Neighbouring nodes and cost to reach them
    * @return {this}
    * @example
@@ -178,7 +177,7 @@ class Graph {
     }
 
     const explored = new Set();
-    const frontier = new Queue();
+    const frontier = new PriorityQueue();
     const previous = new Map();
 
     let path = [];
@@ -287,7 +286,6 @@ class Graph {
   shortestPath(...args) {
     return this.path(...args);
   }
-
 }
 
-module.exports = Graph;
+export default Graph;

@@ -8,8 +8,7 @@
  * You should **never** modify the queue directly, but only using the methods
  * provided by the class.
  */
-class PriorityQueue {
-
+export class PriorityQueue {
   /**
    * Creates a new empty priority queue
    */
@@ -99,9 +98,6 @@ class PriorityQueue {
    * @return {object}
    */
   get(key) {
-    return this.queue.find(element => element.key === key);
+    return this.queue.find((element) => element.key === key);
   }
-
 }
-
-module.exports = PriorityQueue;
