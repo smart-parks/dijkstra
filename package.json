@@ -4,6 +4,7 @@
   "description": "A NodeJS implementation of Dijkstra's algorithm",
   "author": "Alberto Restifo <alberto.restifo@gmail.com>",
   "main": "./index.js",
+  "module": "./index.es.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/smart-parks/node-dijkstra"
@@ -16,10 +17,12 @@
   "bugs": {
     "url": "https://github.com/smart-parks/node-dijkstra/issues"
   },
-  "keywords": ["dijkstra", "shortest path"],
+  "keywords": [
+    "dijkstra",
+    "shortest path"
+  ],
   "license": "MIT",
   "devDependencies": {
-    "@ampproject/rollup-plugin-closure-compiler": "^0.25.2",
     "jest": "^26.0.1",
     "must": "^0.13.2",
     "prettier": "^2.0.5",
@@ -29,7 +32,9 @@
     "sinon": "^1.17.5"
   },
   "jest": {
-    "testMatch": ["**/test/*.test.js"],
+    "testMatch": [
+      "**/test/*.test.js"
+    ],
     "transform": {
       "^.+\\.js$": "rollup-jest"
     }
