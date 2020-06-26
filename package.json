@@ -1,13 +1,16 @@
 {
-  "name": "node-dijkstra",
+  "name": "dijkstra",
   "version": "2.5.0",
-  "description": "A NodeJS implementation of Dijkstra's algorithm",
-  "author": "Alberto Restifo <alberto.restifo@gmail.com>",
+  "description": "An implementation of Dijkstra's algorithm",
+  "contributors": [
+    { "name": "Alberto Restifo", "url": "https://github.com/albertorestifo" },
+    { "name": "SmartParks", "url": "https://github.com/smart-parks" }
+  ],
   "main": "./index.js",
   "module": "./index.es.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/smart-parks/node-dijkstra"
+    "url": "https://github.com/smart-parks/dijkstra"
   },
   "scripts": {
     "build": "rollup -c rollup.config.js; du index.js; gzip -c index.js | wc -c",
@@ -15,7 +18,7 @@
     "test": "yarn jest --coverage"
   },
   "bugs": {
-    "url": "https://github.com/smart-parks/node-dijkstra/issues"
+    "url": "https://github.com/smart-parks/dijkstra/issues"
   },
   "keywords": ["dijkstra", "shortest path"],
   "license": "MIT",
