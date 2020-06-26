@@ -1,4 +1,3 @@
-import "must";
 import { removeDeepFromMap } from "../libs/removeDeepFromMap";
 
 describe("removeDeepFromMap", () => {
@@ -9,8 +8,8 @@ describe("removeDeepFromMap", () => {
 
     const newMap = removeDeepFromMap(map, "b");
 
-    newMap.has("b").must.be.false();
-    newMap.has("a").must.be.true();
+    expect(newMap.has("b")).toBe(false);
+    expect(newMap.has("a")).toBe(true);
   });
 
   it("removes a deep reference to the key", () => {
@@ -25,10 +24,10 @@ describe("removeDeepFromMap", () => {
 
     const newMap = removeDeepFromMap(map, "bar");
 
-    newMap.has("foo").must.be.true();
-    newMap.get("foo").has("foo").must.be.true();
-    newMap.get("foo").has("bar").must.be.false();
-    newMap.has("bar").must.be.false();
+    expect(newMap.has("foo")).toBe(true);
+    expect(newMap.get("foo").has("foo")).toBe(true);
+    expect(newMap.get("foo").has("bar")).toBe(false);
+    expect(newMap.has("bar")).toBe(false);
   });
 
   it("produes no side-effects", () => {
@@ -38,7 +37,7 @@ describe("removeDeepFromMap", () => {
 
     const newMap = removeDeepFromMap(map, "b");
 
-    newMap.has("b").must.be.false();
-    map.has("b").must.be.true();
+    expect(newMap.has("b")).toBe(false);
+    expect(map.has("b")).toBe(true);
   });
 });

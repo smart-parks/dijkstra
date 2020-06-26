@@ -1,121 +1,38 @@
 import { PriorityQueue } from "./PriorityQueue";
 import { removeDeepFromMap } from "./removeDeepFromMap";
-import { toDeepMap } from "./toDeepMap";
-import { validateDeep } from "./validateDeep";
 
 const NO_ROUTE = { path: [], cost: 0 };
 
-/** Creates and manages a graph */
 class Graph {
-  /**
-   * Creates a new Graph, optionally initializing it a nodes graph representation.
-   *
-   * A graph representation is an object that has as keys the name of the point and as values
-   * the points reacheable from that node, with the cost to get there:
-   *
-   *     {
-   *       node (Number|String): {
-   *         neighbor (Number|String): cost (Number),
-   *         ...,
-   *       },
-   *     }
-   *
-   * In alternative to an object, you can pass a `Map` of `Map`. This will
-   * allow you to specify numbers as keys.
-   *
-   * @param {Object|Map} [graph] - Initial graph definition
-   * @example
-   *
-   * const route = new Graph();
-   *
-   * // Pre-populated graph
-   * const route = new Graph({
-   *   A: { B: 1 },
-   *   B: { A: 1, C: 2, D: 4 },
-   * });
-   *
-   * // Passing a Map
-   * const g = new Map()
-   *
-   * const a = new Map()
-   * a.set('B', 1)
-   *
-   * const b = new Map()
-   * b.set('A', 1)
-   * b.set('C', 2)
-   * b.set('D', 4)
-   *
-   * g.set('A', a)
-   * g.set('B', b)
-   *
-   * const route = new Graph(g)
-   */
-  constructor(graph) {
-    if (graph instanceof Map) {
-      validateDeep(graph);
-      this.graph = graph;
-    } else if (graph) {
-      this.graph = toDeepMap(graph);
-    } else {
-      this.graph = new Map();
+  constructor(seed) {
+    this.graph = new Map();
+
+    if (seed) {
+      for (var a in seed) {
+        for (var b in seed[a]) {
+          this.connect(a, b, seed[a][b]);
+        }
+      }
     }
-  }
-
-  /**
-   * Adds a node to the graph
-   *
-   * @param {string} name - Name of the node
-   * @param {Object|Map} neighbors - Neighbouring nodes and cost to reach them
-   * @return {this}
-   * @example
-   *
-   * const route = new Graph();
-   *
-   * route.addNode('A', { B: 1 });
-   *
-   * // It's possible to chain the calls
-   * route
-   *   .addNode('B', { A: 1 })
-   *   .addNode('C', { A: 3 });
-   *
-   * // The neighbors can be expressed in a Map
-   * const d = new Map()
-   * d.set('A', 2)
-   * d.set('B', 8)
-   *
-   * route.addNode('D', d)
-   */
-  addNode(name, neighbors) {
-    let nodes;
-    if (neighbors instanceof Map) {
-      validateDeep(neighbors);
-      nodes = neighbors;
-    } else {
-      nodes = toDeepMap(neighbors);
-    }
-
-    this.graph.set(name, nodes);
-
-    return this;
   }
 
   /**
    * Add a single connection to the graph.
    *
-   * @param {string} nodeA - Name of start node
-   * @param {string} nodeB - Name of end node
-   * @param {number} weight - Weight value for connection
+   * @param {any} nodeA - Name of start node
+   * @param {any} nodeB - Name of end node
+   * @param {number} cost - Weight value for connection
    * @returns{this}
    */
-  connect(nodeA, nodeB, weight) {
+  connect(nodeA, nodeB, cost) {
     if (this.graph.has(nodeA) === false) {
       let connections = new Map();
 
-      connections.set(nodeB, weight);
+      connections.set(nodeB, cost);
 
       this.graph.set(nodeA, connections);
     } else {
-      this.graph.get(nodeA).set(nodeB, weight);
+      this.graph.get(nodeA).set(nodeB, cost);
     }
 
     return this;
@@ -124,7 +41,7 @@ class Graph {
   /**
    * Removes a node and all of its references from the graph
    *
-   * @param {string|number} key - Key of the node to remove from the graph
+   * @param {any} node - Node to remove from the graph
    * @return {this}
    * @example
    *
@@ -269,8 +186,8 @@ class Graph {
     // Return null when no path can be found
     if (!path.length) {
       if (options.cost) {
-        return NO_ROUTE
-      };
+        return NO_ROUTE;
+      }
 
       return NO_ROUTE.path;
     }
@@ -301,6 +218,29 @@ class Graph {
     }
 
     return path;
+  }
+
+  /**
+   * Find the closest node connecting to a given node
+   * @param {any} origin - Starting node
+   * @return {node}
+   */
+  closest(origin) {
+    if (this.graph.has(origin) === false) {
+      return null;
+    }
+
+    let cheapest = Infinity;
+    let closest = null;
+
+    this.graph.get(origin).forEach((cost, node) => {
+      if (cost < cheapest) {
+        closest = node;
+        cheapest = cost;
+      }
+    });
+
+    return closest;
   }
 }
 
