@@ -3,8 +3,14 @@
   "version": "2.5.0",
   "description": "An implementation of Dijkstra's algorithm",
   "contributors": [
-    { "name": "Alberto Restifo", "url": "https://github.com/albertorestifo" },
-    { "name": "SmartParks", "url": "https://github.com/smart-parks" }
+    {
+      "name": "Alberto Restifo",
+      "url": "https://github.com/albertorestifo"
+    },
+    {
+      "name": "SmartParks",
+      "url": "https://github.com/smart-parks"
+    }
   ],
   "main": "./index.js",
   "module": "./index.es.js",
@@ -20,17 +26,22 @@
   "bugs": {
     "url": "https://github.com/smart-parks/dijkstra/issues"
   },
-  "keywords": ["dijkstra", "shortest path"],
+  "keywords": [
+    "dijkstra",
+    "shortest path"
+  ],
   "license": "MIT",
   "devDependencies": {
-    "jest": "^26.0.1",
+    "jest": "^26.1.0",
     "prettier": "^2.0.5",
-    "rollup": "^2.11.2",
+    "rollup": "^2.18.1",
     "rollup-jest": "^0.0.2",
     "rollup-plugin-terser": "^6.1.0"
   },
   "jest": {
-    "testMatch": ["**/test/*.test.js"],
+    "testMatch": [
+      "**/test/*.test.js"
+    ],
     "transform": {
       "^.+\\.js$": "rollup-jest"
     }
