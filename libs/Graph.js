@@ -3,6 +3,8 @@ import { removeDeepFromMap } from "./removeDeepFromMap";
 import { toDeepMap } from "./toDeepMap";
 import { validateDeep } from "./validateDeep";
 
+const NO_ROUTE = { path: [], cost: 0 };
+
 /** Creates and manages a graph */
 class Graph {
   /**
@@ -98,10 +100,25 @@ class Graph {
   }
 
   /**
-   * @deprecated since version 2.0, use `Graph#addNode` instead
+   * Add a single connection to the graph.
+   *
+   * @param {string} nodeA - Name of start node
+   * @param {string} nodeB - Name of end node
+   * @param {number} weight - Weight value for connection
+   * @returns{this}
    */
-  addVertex(name, neighbors) {
-    return this.addNode(name, neighbors);
+  connect(nodeA, nodeB, weight) {
+    if (this.graph.has(nodeA) === false) {
+      let connections = new Map();
+
+      connections.set(nodeB, weight);
+
+      this.graph.set(nodeA, connections);
+    } else {
+      this.graph.get(nodeA).set(nodeB, weight);
+    }
+
+    return this;
   }
 
   /**
@@ -171,9 +188,11 @@ class Graph {
   path(start, goal, options = {}) {
     // Don't run when we don't have nodes set
     if (!this.graph.size) {
-      if (options.cost) return { path: null, cost: 0 };
+      if (options.cost) {
+        return NO_ROUTE;
+      }
 
-      return null;
+      return [];
     }
 
     const explored = new Set();
@@ -184,7 +203,9 @@ class Graph {
     let totalCost = 0;
 
     let avoid = [];
-    if (options.avoid) avoid = [].concat(options.avoid);
+    if (options.avoid) {
+      avoid = [].concat(options.avoid);
+    }
 
     if (avoid.includes(start)) {
       throw new Error(`Starting node (${start}) cannot be avoided`);
@@ -247,9 +268,11 @@ class Graph {
 
     // Return null when no path can be found
     if (!path.length) {
-      if (options.cost) return { path: null, cost: 0 };
+      if (options.cost) {
+        return NO_ROUTE
+      };
 
-      return null;
+      return NO_ROUTE.path;
     }
 
     // From now on, keep in mind that `path` is populated in reverse order,
@@ -278,13 +301,6 @@ class Graph {
     }
 
     return path;
-  }
-
-  /**
-   * @deprecated since version 2.0, use `Graph#path` instead
-   */
-  shortestPath(...args) {
-    return this.path(...args);
   }
 }
 
