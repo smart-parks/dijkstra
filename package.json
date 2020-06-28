@@ -20,16 +20,14 @@
   },
   "scripts": {
     "build": "rollup -c rollup.config.js; du index.js; gzip -c index.js | wc -c",
+    "watch": "rollup -c rollup.config.js --watch",
     "format": "prettier --write {libs,test}/*.js",
     "test": "yarn jest --coverage"
   },
   "bugs": {
     "url": "https://github.com/smart-parks/dijkstra/issues"
   },
-  "keywords": [
-    "dijkstra",
-    "shortest path"
-  ],
+  "keywords": ["dijkstra", "shortest path"],
   "license": "MIT",
   "devDependencies": {
     "jest": "^26.1.0",
@@ -39,9 +37,7 @@
     "rollup-plugin-terser": "^6.1.0"
   },
   "jest": {
-    "testMatch": [
-      "**/test/*.test.js"
-    ],
+    "testMatch": ["**/test/*.test.js"],
     "transform": {
       "^.+\\.js$": "rollup-jest"
     }

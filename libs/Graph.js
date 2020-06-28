@@ -1,8 +1,6 @@
 import { PriorityQueue } from "./PriorityQueue";
 import { removeDeepFromMap } from "./removeDeepFromMap";
 
-const NO_ROUTE = { path: [], cost: 0 };
-
 class Graph {
   constructor(seed) {
     this.graph = new Map();
@@ -106,7 +104,7 @@ class Graph {
     // Don't run when we don't have nodes set
     if (!this.graph.size) {
       if (options.cost) {
-        return NO_ROUTE;
+        return { path: [], cost: 0 };
       }
 
       return [];
@@ -119,14 +117,11 @@ class Graph {
     let path = [];
     let totalCost = 0;
 
-    let avoid = [];
-    if (options.avoid) {
-      avoid = [].concat(options.avoid);
-    }
+    let avoid = options.avoid ? new Set(options.avoid) : new Set();
 
-    if (avoid.includes(start)) {
+    if (avoid.has(start)) {
       throw new Error(`Starting node (${start}) cannot be avoided`);
-    } else if (avoid.includes(goal)) {
+    } else if (avoid.has(goal)) {
       throw new Error(`Ending node (${goal}) cannot be avoided`);
     }
 
@@ -160,7 +155,7 @@ class Graph {
       const neighbors = this.graph.get(node.key) || new Map();
       neighbors.forEach((nCost, nNode) => {
         // If we already explored the node, or the node is to be avoided, skip it
-        if (explored.has(nNode) || avoid.includes(nNode)) return null;
+        if (explored.has(nNode) || avoid.has(nNode)) return null;
 
         // If the neighboring node is not yet in the frontier, we add it with
         // the correct cost
@@ -186,10 +181,10 @@ class Graph {
     // Return null when no path can be found
     if (!path.length) {
       if (options.cost) {
-        return NO_ROUTE;
+        return { path: [], cost: 0 };
       }
 
-      return NO_ROUTE.path;
+      return [];
     }
 
     // From now on, keep in mind that `path` is populated in reverse order,
@@ -241,6 +236,20 @@ class Graph {
     });
 
     return closest;
+  }
+
+  /**
+   * Get a list of all nodes connected to a given node
+   *
+   * @param {any} origin - Starting node
+   * @return {Array[node]}
+   */
+  connections(origin) {
+    if (this.graph.has(origin)) {
+      return Array.from(this.graph.get(origin).keys());
+    }
+
+    return [];
   }
 }
 
