@@ -1,5 +1,5 @@
 {
-  "name": "dijkstra",
+  "name": "@smart-parks/dijkstra",
   "version": "2.5.0",
   "description": "An implementation of Dijkstra's algorithm",
   "contributors": [
@@ -17,6 +17,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/smart-parks/dijkstra"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
   },
   "scripts": {
     "build": "rollup -c rollup.config.js; du index.js; gzip -c index.js | wc -c",

@@ -5,7 +5,7 @@ A minor re-write of [albertorestifo/node-dijkstra](https://github.com/albertores
 ## Installation
 
 ```shell
-yarn add smart-parks/dijkstra
+yarn add @smart-parks/dijkstra
 ```
 
 ## Usage
@@ -114,3 +114,10 @@ If `options.cost` is `false` (default behaviour) an `Array` will be returned, co
 If `options.cost` is `true`, an `Object` with keys `path` and `cost` will be returned. `path` follows the same rules as above and `cost` is the total cost of the found route between nodes.
 
 When to route can be found, the path will be set to `null`.
+
+## Publishing to NPM
+
+```shell
+npm login --registry=https://npm.pkg.github.com/ # Generate and use a well-scoped GitHub personal access token as the password.
+npm publish
+```
